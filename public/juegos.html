@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Juegos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Juego</th>
+                <th>Título</th>
+                <th>Precio</th>
+                <th>Género</th>
+                <th>Fecha Lanzamiento</th>
+            </tr>
+        </thead>
+        <tbody id="juegos-table-body">
+            <!-- Aquí se llenarán los datos dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener los juegos
+        async function fetchJuegos() {
+            try {
+                const response = await fetch('http://0.0.0.0:3000/juegos');
+
+                const juegos = await response.json();
+
+                const tableBody = document.getElementById('juegos-table-body');
+                tableBody.innerHTML = '';
+
+                juegos.forEach(juego => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${juego.id_juego}</td>
+                        <td>${juego.titulo}</td>
+                        <td>${juego.precio}</td>
+                        <td>${juego.genero}</td>
+                        <td>${juego.fecha_lanzamiento}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching juegos:', error);
+            }
+        }
+
+        // Llamar la función al cargar la página
+        fetchJuegos();
+    </script>
+</body>
+</html>

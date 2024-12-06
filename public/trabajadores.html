@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajadores</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trabajadores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Trabajador</th>
+                <th>Nombre</th>
+                <th>Puesto</th>
+                <th>Salario</th>
+            </tr>
+        </thead>
+        <tbody id="trabajadores-table-body">
+            <!-- Los datos de los trabajadores se llenarán dinámicamente aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener los trabajadores
+        async function fetchTrabajadores() {
+            try {
+                const response = await fetch('http://0.0.0.0:3000/trabajadores');
+                const trabajadores = await response.json();
+
+                const tableBody = document.getElementById('trabajadores-table-body');
+                tableBody.innerHTML = '';
+
+                trabajadores.forEach(trabajador => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${trabajador.id_trabajador}</td>
+                        <td>${trabajador.nombre}</td>
+                        <td>${trabajador.puesto}</td>
+                        <td>${trabajador.salario}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching trabajadores:', error);
+            }
+        }
+
+        // Llamar la función cuando la página cargue
+        fetchTrabajadores();
+    </script>
+</body>
+</html>

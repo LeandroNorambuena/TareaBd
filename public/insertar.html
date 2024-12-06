@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insertar Datos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            padding: 5px;
+            margin-top: 5px;
+            width: 200px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Formulario para Insertar Datos</h1>
+    </header>
+
+    <div>
+        <h2>Insertar Cliente</h2>
+        <div class="form-container">
+            <label for="nombre_cliente">Nombre:</label>
+            <input type="text" id="nombre_cliente" required><br>
+            <label for="email_cliente">Email:</label>
+            <input type="email" id="email_cliente" required><br>
+            <label for="direccion_cliente">Dirección:</label>
+            <input type="text" id="direccion_cliente" required><br>
+            <button onclick="insertarCliente()">Insertar Cliente</button>
+        </div>
+    </div>
+    
+
+    <div>
+        <h2>Insertar Juego</h2>
+        <div class="form-container">
+            <label for="titulo_juego">Título:</label>
+            <input type="text" id="titulo_juego" required><br>
+            <label for="precio_juego">Precio:</label>
+            <input type="number" id="precio_juego" required><br>
+            <label for="genero_juego">Género:</label>
+            <input type="text" id="genero_juego" required><br>
+            <label for="fecha_lanzamiento_juego">Fecha de Lanzamiento:</label>
+            <input type="date" id="fecha_lanzamiento_juego" required><br>
+            <button onclick="insertarJuego()">Insertar Juego</button>
+        </div>
+    </div>
+
+    <div>
+        <h2>Insertar Tienda</h2>
+        <div class="form-container">
+            <label for="nombre_tienda">Nombre:</label>
+            <input type="text" id="nombre_tienda" required><br>
+            <label for="direccion_tienda">Dirección:</label>
+            <input type="text" id="direccion_tienda" required><br>
+            <label for="telefono_tienda">Teléfono:</label>
+            <input type="text" id="telefono_tienda" required><br>
+            <button onclick="insertarTienda()">Insertar Tienda</button>
+        </div>
+    </div>
+
+    <div>
+        <h2>Insertar Biblioteca</h2>
+        <div class="form-container">
+            <label for="id_cliente_biblioteca">ID Cliente:</label>
+            <input type="number" id="id_cliente_biblioteca" required><br>
+            <label for="id_juego_biblioteca">ID Juego:</label>
+            <input type="number" id="id_juego_biblioteca" required><br>
+            <button onclick="insertarBiblioteca()">Insertar en Biblioteca</button>
+        </div>
+    </div>
+
+    <script>
+        // Funciones para insertar cada entidad
+        
+        async function insertarCliente() {
+    const data = {
+        nombre: document.getElementById('nombre_cliente').value,
+        email: document.getElementById('email_cliente').value,
+        direccion: document.getElementById('direccion_cliente').value,  // Cambiado de telefono a direccion
+    };
+    try {
+        const response = await fetch('http://localhost:3000/clientes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        const result = await response.json();
+        console.log(result);
+        alert('Cliente insertado correctamente');
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al insertar cliente');
+    }
+}
+
+
+        async function insertarJuego() {
+            const data = {
+                titulo: document.getElementById('titulo_juego').value,
+                precio: document.getElementById('precio_juego').value,
+                genero: document.getElementById('genero_juego').value,
+                fecha_lanzamiento: document.getElementById('fecha_lanzamiento_juego').value,
+            };
+            try {
+                const response = await fetch('http://localhost:3000/juegos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                console.log(result);
+                alert('Juego insertado correctamente');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al insertar juego');
+            }
+        }
+
+        async function insertarTienda() {
+            const data = {
+                nombre: document.getElementById('nombre_tienda').value,
+                direccion: document.getElementById('direccion_tienda').value,
+                telefono: document.getElementById('telefono_tienda').value,
+            };
+            try {
+                const response = await fetch('http://localhost:3000/tiendas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                console.log(result);
+                alert('Tienda insertada correctamente');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al insertar tienda');
+            }
+        }
+
+        async function insertarBiblioteca() {
+            const data = {
+                id_cliente: document.getElementById('id_cliente_biblioteca').value,
+                id_juego: document.getElementById('id_juego_biblioteca').value,
+            };
+            try {
+                const response = await fetch('http://localhost:3000/biblioteca', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                console.log(result);
+                alert('Juego insertado en biblioteca correctamente');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al insertar en biblioteca');
+            }
+        }
+    </script>
+</body>
+</html>

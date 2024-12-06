@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiendas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tiendas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Tienda</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+            </tr>
+        </thead>
+        <tbody id="tiendas-table-body">
+            <!-- Los datos de las tiendas se llenarán dinámicamente aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener las tiendas
+        async function fetchTiendas() {
+            try {
+                const response = await fetch('http://0.0.0.0:3000/tiendas');
+                const tiendas = await response.json();
+
+                const tableBody = document.getElementById('tiendas-table-body');
+                tableBody.innerHTML = '';
+
+                tiendas.forEach(tienda => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${tienda.id_tienda}</td>
+                        <td>${tienda.nombre}</td>
+                        <td>${tienda.direccion}</td>
+                        <td>${tienda.telefono}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching tiendas:', error);
+            }
+        }
+
+        // Llamar la función cuando la página cargue
+        fetchTiendas();
+    </script>
+</body>
+</html>

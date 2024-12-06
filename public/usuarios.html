@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Usuarios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Usuario</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody id="usuarios-table-body">
+            <!-- Aquí se llenarán los datos dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener los usuarios
+        async function fetchUsuarios() {
+            try {
+                const response = await fetch('http://0.0.0.0:3000/usuarios');
+                const usuarios = await response.json();
+
+                const tableBody = document.getElementById('usuarios-table-body');
+                tableBody.innerHTML = '';
+
+                usuarios.forEach(usuario => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${usuario.id_usuario}</td>
+                        <td>${usuario.nombre}</td>
+                        <td>${usuario.email}</td>
+                        <td>${usuario.rol}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching usuarios:', error);
+            }
+        }
+
+        // Llamar la función al cargar la página
+        fetchUsuarios();
+    </script>
+</body>
+</html>

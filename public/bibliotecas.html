@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliotecas</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bibliotecas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Biblioteca</th>
+                <th>ID Cliente</th>
+                <th>ID Juego</th>
+                <th>Fecha Adquisición</th>
+            </tr>
+        </thead>
+        <tbody id="biblioteca-table-body">
+            <!-- Aquí se llenarán los datos dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener las bibliotecas
+        async function fetchBibliotecas() {
+            try {
+                const response = await fetch('http://0.0.0.0:3000/biblioteca');
+                const bibliotecas = await response.json();
+
+                const tableBody = document.getElementById('biblioteca-table-body');
+                tableBody.innerHTML = '';
+
+                bibliotecas.forEach(biblioteca => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${biblioteca.id_biblioteca}</td>
+                        <td>${biblioteca.id_cliente}</td>
+                        <td>${biblioteca.id_juego}</td>
+                        <td>${biblioteca.fecha_adquisicion}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching bibliotecas:', error);
+            }
+        }
+
+        // Llamar la función al cargar la página
+        fetchBibliotecas();
+    </script>
+</body>
+</html>

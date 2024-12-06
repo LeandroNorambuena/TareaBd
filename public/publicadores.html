@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicadores</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Publicadores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Publicador</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+            </tr>
+        </thead>
+        <tbody id="publicadores-table-body">
+            <!-- Aquí se llenarán los datos dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        // Función para obtener los publicadores
+        async function fetchPublicadores() {
+            try {
+                const response = await fetch('http://0.0.0.0:3000/publicadores');
+                const publicadores = await response.json();
+
+                const tableBody = document.getElementById('publicadores-table-body');
+                tableBody.innerHTML = '';
+
+                publicadores.forEach(publicador => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${publicador.id_publicador}</td>
+                        <td>${publicador.nombre}</td>
+                        <td>${publicador.correo}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching publicadores:', error);
+            }
+        }
+
+        // Llamar la función al cargar la página
+        fetchPublicadores();
+    </script>
+</body>
+</html>
