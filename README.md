@@ -61,36 +61,41 @@ Operaciones CRUD para diferentes entidades:
 El archivo `queries.js` contiene las funciones para interactuar con la base de datos. Ejemplo de datos insertados:
 
 1. **Clientes**:
-   ```json
+   ~~~json
    [
      {"Nombre": "Juan Pérez", "Email": "juan.perez@example.com", "Direccion": "Av. Siempre Viva 123"},
      {"Nombre": "María Gómez", "Email": "maria.gomez@example.com", "Direccion": "Calle Luna 456"}
    ]
+   ~~~
 2. **Tiendas**:
-```json
+ ~~~json
    [
      {"Nombre": "Juan Pérez", "Email": "juan.perez@example.com", "Direccion": "Av. Siempre Viva 123"},
-     {"Nombre": "María Gómez", "Email": "maria.gomez@example.com", "Direccion": "Calle Luna 456"}
-   ]
-3. **Tiendas**:
-```json
+     {"Nombre": "María Gómez", "Email": "maria.gomez@example.com", "Direccion": "Calle Luna 456"}]
+~~~
+
+3.**Tiendas**:
+~~~json
    [
   {"Titulo": "The Last of Us Part II", "Precio": 59.99, "Genero": "Acción/Aventura", "Fecha_Lanzamiento": "2020-06-19"}
   ]
+~~~
 ## Configuración
 
 ### Instalar dependencias:
-```bash
+~~~bash
 npm install
+~~~
 ### Ejecutar la Api
-```bash
+~~~bash
 node server.js
+~~~
 ### Base De Datos:
-```javascript
+~~~javascript
    const pool = new Pool({
     user: 'Usuario_db',
     host: 'Host_db',
     database: 'Nombre_db',
     password: 'Contraseña_db',
     port: 5432,
-});
+});~~~
